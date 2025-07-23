@@ -1,0 +1,12 @@
+const multer = require('multer');
+
+const storage = multer.diskStorage({
+  destination: 'uploads/',
+  filename: (_, file, cb) => {
+    cb(null, Date.now() + '-' + file.originalname);
+  },
+});
+
+const upload = multer({ storage });
+
+module.exports = upload.array('files', 1000);

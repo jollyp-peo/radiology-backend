@@ -6,7 +6,17 @@ const courseRoutes = require("./routes/courseRoutes");
 const ebookRoutes = require("./routes/ebookRoutes");
 
 const app = express();
-app.use(cors());
+const allowedOrigins = [
+  "http://localhost:5173", // for local dev
+  "https://evercare-radiology.vercel.app/", // your Vercel frontend
+];
+
+app.use(
+  cors({
+    origin: allowedOrigins,
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 // Routes

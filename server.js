@@ -6,6 +6,9 @@ const courseRoutes = require("./routes/courseRoutes");
 const ebookRoutes = require("./routes/ebookRoutes");
 
 const app = express();
+
+app.use(express.json());
+
 const allowedOrigins = [
   "http://localhost:5173", // for local dev
   "https://evercare-radiology.vercel.app/", // your Vercel frontend
@@ -13,11 +16,18 @@ const allowedOrigins = [
 
 app.use(
   cors({
-    origin: allowedOrigins,
+    origin: function (origin, callback) {
+      // allow requests with no origin (like mobile apps or curl requests)
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      } else {
+        return callback(new Error("CORS not allowed from this origin"));
+      }
+    },
     credentials: true,
   })
 );
-app.use(express.json());
 
 // Routes
 app.use('/api/auth', require('./routes/authRoutes'));

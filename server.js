@@ -11,7 +11,7 @@ app.use(express.json());
 
 const allowedOrigins = [
   "http://localhost:5173", // for local dev
-  "https://evercare-radiology.vercel.app/", // your Vercel frontend
+  "https://evercare-radiology.vercel.app", // your Vercel frontend
 ];
 
 app.use(
